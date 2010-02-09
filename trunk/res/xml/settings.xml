@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
+android:title="Settings">
+
+<EditTextPreference android:title="Player name"
+android:dialogTitle="Modify player name"
+android:dialogMessage="Enter your username (print on high-score)"
+android:defaultValue="Player Default"
+android:summary="The username shown on high-scores"
+android:key="username" />
+
+<CheckBoxPreference android:title="Vibrate" android:key="vibrate"
+android:summaryOn="Game will wibrate at game over"
+android:summaryOff="Game won't wibrate at game over"
+android:defaultValue="true"
+ /> 
+
+</PreferenceScreen>
