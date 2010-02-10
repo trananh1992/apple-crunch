@@ -371,6 +371,18 @@ public class Game3 extends RokonActivity {
     	}
     };
     
+    
+    private Handler timerRemove=new Handler();
+    private Runnable RemoveSprites=new Runnable()
+    {
+    	@Override
+		public void run() {	
+	    	removeSprites();
+	    	timerRemove.postDelayed(RemoveSprites, 5000);
+    	}
+    };
+    
+    
     private Handler timer=new Handler();
     private Runnable endOfGame1=new Runnable()
     {
@@ -439,8 +451,6 @@ public void moveSprites()
 		canonSprite.addCollisionSprite(sprite);
 		sprite.setCollisionHandler(collisionHandler);
     }
-	
-	removeSprites();
 }
     
 
@@ -626,6 +636,8 @@ public void onCreate() {
     		timerGoal.postDelayed(showGoal, 0);
     		
     		loaded=true;
+    		
+    		timerRemove.postDelayed(RemoveSprites, 5000);
     }
 
     @Override
