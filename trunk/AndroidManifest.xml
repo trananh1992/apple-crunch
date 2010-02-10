@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.malgon.applecrush"
+      package="com.malgon.applecrunch"
       android:versionCode="1"
       android:versionName="2.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
@@ -14,9 +14,6 @@
         <activity android:name=".Game1"
                   android:label="Game1">
         </activity>
-        <activity android:name=".Game2"
-                  android:label="Game2">
-        </activity>
         <activity android:name=".Game3"
                   android:label="Game3">
         </activity>
@@ -28,6 +25,8 @@
                   android:label="Settings">
         </activity>
 
+		<!-- The application's publisher ID assigned by AdMob -->
+        <meta-data android:value="a14b72c2ed1b589" android:name="ADMOB_PUBLISHER_ID" />
     </application>
     <uses-sdk android:minSdkVersion="3" />
 

@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res/com.malgon.applecrunch"
   android:layout_width="wrap_content"
-  android:layout_height="wrap_content" android:background="@drawable/background2" android:gravity="center" android:orientation="vertical">
+  android:layout_height="wrap_content"> 
+
+<LinearLayout
+  android:layout_width="wrap_content"
+  android:layout_height="fill_parent" android:background="@drawable/background2" android:gravity="center" android:orientation="vertical">
+
+
 <Button android:id="@+id/Button01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Crush apple"></Button>
-
-
 <Button android:id="@+id/Button04" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Shoot apple"></Button><Button android:id="@+id/Button05" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Settings"></Button><Button android:id="@+id/Button03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Quit"></Button>
 
-
 </LinearLayout>
+
+<com.admob.android.ads.AdView  
+			        android:id="@+id/ad" 
+			        android:layout_width="fill_parent" 
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentBottom="true"
+			        app:backgroundColor="#000000"
+			        app:textColor="#FFFFFF"
+			        app:keywords="Android game"
+			        app:testing="false"
+			        android:gravity="bottom"
+			/>
+
+
+</RelativeLayout>
