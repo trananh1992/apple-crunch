@@ -95,6 +95,8 @@ public class Game3 extends RokonActivity {
     public Text textTime;
     
     
+    public boolean loaded=false;
+    
   //les variables de déplacement
     public int moveCanonX=20;
     public int laserVelocity=500;
@@ -438,8 +440,12 @@ public void moveSprites()
 		sprite.setCollisionHandler(collisionHandler);
     }
 	
-	
-	
+	removeSprites();
+}
+    
+
+public void removeSprites()
+{
 	//On supprime tous les anciens Sprites qui sont sortis de l'écran
 	for(int i=0;i<appleSpriteList.size();i++)
 	{
@@ -477,7 +483,9 @@ public void moveSprites()
 		}
 	}
 }
-    
+
+
+
 public void onCreate() {
     createEngine("graphics/splash2.png",320, 430, false);
 
@@ -616,6 +624,8 @@ public void onCreate() {
     		rokon.addText(textTime);
     		
     		timerGoal.postDelayed(showGoal, 0);
+    		
+    		loaded=true;
     }
 
     @Override
@@ -626,39 +636,41 @@ public void onCreate() {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
-    	if(keyCode==KeyEvent.KEYCODE_DPAD_LEFT)
+    	if(loaded)
     	{
-    		canonSprite.moveX(-moveCanonX);
+	    	if(keyCode==KeyEvent.KEYCODE_DPAD_LEFT)
+	    	{
+	    		canonSprite.moveX(-moveCanonX);
+	    	}
+	    	else if(keyCode==KeyEvent.KEYCODE_DPAD_RIGHT)
+	    	{
+	    		canonSprite.moveX(moveCanonX);
+	    	}
+	    	else if(keyCode==KeyEvent.KEYCODE_DPAD_CENTER)
+	    	{
+	    		Sprite laserSprite = new Sprite(180,80,laserTexture);
+	            Hotspot laserHotspot = new Hotspot(laserSprite);  
+	            
+	            rokon.addSprite(laserSprite);
+	            rokon.addHotspot(laserHotspot);
+	            
+	    		laserSprite.setXY(canonSprite.getX()+20, canonSprite.getY());
+	    		laserSprite.setVisible(true);
+	    		
+	    		laserSprite.setVelocityY(-laserVelocity);
+	    		
+	    		laserSprite.setCollisionHandler(collisionHandler);
+	    		
+	    		for(int i=0;i<appleSpriteList.size();i++)
+	    			laserSprite.addCollisionSprite(appleSpriteList.get(i));
+	    		
+	    		for(int i=0;i<androidSpriteList.size();i++)
+	    			laserSprite.addCollisionSprite(androidSpriteList.get(i));
+	    		
+	    		laserSpriteList.add(laserSprite);
+	    		laserHotspotList.add(laserHotspot);
+	    	}
     	}
-    	else if(keyCode==KeyEvent.KEYCODE_DPAD_RIGHT)
-    	{
-    		canonSprite.moveX(moveCanonX);
-    	}
-    	else if(keyCode==KeyEvent.KEYCODE_DPAD_CENTER)
-    	{
-    		Sprite laserSprite = new Sprite(180,80,laserTexture);
-            Hotspot laserHotspot = new Hotspot(laserSprite);  
-            
-            rokon.addSprite(laserSprite);
-            rokon.addHotspot(laserHotspot);
-            
-    		laserSprite.setXY(canonSprite.getX()+20, canonSprite.getY());
-    		laserSprite.setVisible(true);
-    		
-    		laserSprite.setVelocityY(-laserVelocity);
-    		
-    		laserSprite.setCollisionHandler(collisionHandler);
-    		
-    		for(int i=0;i<appleSpriteList.size();i++)
-    			laserSprite.addCollisionSprite(appleSpriteList.get(i));
-    		
-    		for(int i=0;i<androidSpriteList.size();i++)
-    			laserSprite.addCollisionSprite(androidSpriteList.get(i));
-    		
-    		laserSpriteList.add(laserSprite);
-    		laserHotspotList.add(laserHotspot);
-    	}
-    	
     	
     	return super.onKeyDown(keyCode, event);
     }
@@ -667,43 +679,49 @@ public void onCreate() {
     @Override
     public void onTouchDown(int x, int y, boolean hotspot)
     {
-    	if(x>canonSprite.getX()-30 && x<canonSprite.getX()+canonSprite.getWidth()+30 && y>canonSprite.getY()-30)
+    	if(loaded)
     	{
-    		Sprite laserSprite = new Sprite(180,80,laserTexture);
-            Hotspot laserHotspot = new Hotspot(laserSprite);  
-            
-            rokon.addSprite(laserSprite);
-            rokon.addHotspot(laserHotspot);
-            
-    		laserSprite.setXY(canonSprite.getX()+20, canonSprite.getY());
-    		laserSprite.setVisible(true);
-    		
-    		laserSprite.setVelocityY(-laserVelocity);
-    		
-    		laserSprite.setCollisionHandler(collisionHandler);
-    		
-    		for(int i=0;i<appleSpriteList.size();i++)
-    			laserSprite.addCollisionSprite(appleSpriteList.get(i));
-    		
-    		for(int i=0;i<androidSpriteList.size();i++)
-    			laserSprite.addCollisionSprite(androidSpriteList.get(i));
-    		
-    		laserSpriteList.add(laserSprite);
-    		laserHotspotList.add(laserHotspot);
+	    	if(x>canonSprite.getX()-30 && x<canonSprite.getX()+canonSprite.getWidth()+30 && y>canonSprite.getY()-30)
+	    	{
+	    		Sprite laserSprite = new Sprite(180,80,laserTexture);
+	            Hotspot laserHotspot = new Hotspot(laserSprite);  
+	            
+	            rokon.addSprite(laserSprite);
+	            rokon.addHotspot(laserHotspot);
+	            
+	    		laserSprite.setXY(canonSprite.getX()+20, canonSprite.getY());
+	    		laserSprite.setVisible(true);
+	    		
+	    		laserSprite.setVelocityY(-laserVelocity);
+	    		
+	    		laserSprite.setCollisionHandler(collisionHandler);
+	    		
+	    		for(int i=0;i<appleSpriteList.size();i++)
+	    			laserSprite.addCollisionSprite(appleSpriteList.get(i));
+	    		
+	    		for(int i=0;i<androidSpriteList.size();i++)
+	    			laserSprite.addCollisionSprite(androidSpriteList.get(i));
+	    		
+	    		laserSpriteList.add(laserSprite);
+	    		laserHotspotList.add(laserHotspot);
+	    	}
     	}
     }
     
     @Override
     public void onTouch(int x, int y, boolean hotspot)
     {
-    	if(x<canonSprite.getX()+(canonSprite.getWidth()/2) && y<canonSprite.getY())
-			canonSprite.moveX(-(moveCanonX/3));
-		else if(x>canonSprite.getX()+(canonSprite.getWidth()/2) && y<canonSprite.getY())
-			canonSprite.moveX(moveCanonX/3);
-    	
-		else if(x<canonSprite.getX()-30 && y>canonSprite.getY())
-			canonSprite.moveX(-(moveCanonX/3));
-		else if(x>canonSprite.getX()+canonSprite.getWidth()+30 && y>canonSprite.getY())
-			canonSprite.moveX(moveCanonX/3);
+    	if(loaded)
+    	{
+	    	if(x<canonSprite.getX()+(canonSprite.getWidth()/2) && y<canonSprite.getY())
+				canonSprite.moveX(-(moveCanonX/3));
+			else if(x>canonSprite.getX()+(canonSprite.getWidth()/2) && y<canonSprite.getY())
+				canonSprite.moveX(moveCanonX/3);
+	    	
+			else if(x<canonSprite.getX()-30 && y>canonSprite.getY())
+				canonSprite.moveX(-(moveCanonX/3));
+			else if(x>canonSprite.getX()+canonSprite.getWidth()+30 && y>canonSprite.getY())
+				canonSprite.moveX(moveCanonX/3);
+    	}
     }
 }
