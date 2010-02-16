@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 
 import com.stickycoding.Rokon.Font;
 import com.stickycoding.Rokon.Hotspot;
@@ -125,7 +126,7 @@ public class Game1 extends RokonActivity {
 			if(pref.getBoolean("vibrate", true))
 				rokon.vibrate(1000);
 			
-			scoreDialog.setMessage("Do you want to save score "+score+" ? (you can see high-scores on http://malgonstudio.sfhost.net/apple-crunch/score)");
+			scoreDialog.setMessage("Do you want to save score "+score+" ? (you can see high-scores on http://pixellostudio.sfhost.net/apple-crunch/score)");
 			scoreDialog.show();
 		}
 
@@ -159,7 +160,10 @@ public void moveSprites()
 }
     
 public void onCreate() {
-    createEngine("graphics/splash.png",430, 320, true);
+	DisplayMetrics dm = new DisplayMetrics(); 
+	getWindowManager().getDefaultDisplay().getMetrics(dm); 
+	
+    createEngine("graphics/splash.png",dm.widthPixels, dm.heightPixels, true);
     
     alertDialog = new AlertDialog.Builder(Game1.this).create();
 	alertDialog.setTitle("Game1 Finished");
@@ -331,7 +335,7 @@ public void onCreate() {
     public void onTouchDown(int x, int y, boolean hotspot)
     {
     	SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(Game1.this);
-    	if(x>appleSprite.getX()-10 && x<appleSprite.getX()+appleSprite.getWidth()+10 && y<appleSprite.getY()+appleSprite.getHeight()+10 && y>appleSprite.getY()-10)
+    	if(x>appleSprite.getX()-15 && x<appleSprite.getX()+appleSprite.getWidth()+15 && y<appleSprite.getY()+appleSprite.getHeight()+15 && y>appleSprite.getY()-15)
     	{
     		appleSprite.setTexture(appleCrunchTexture);
             
@@ -341,7 +345,7 @@ public void onCreate() {
             appleTouch++;
     	}
     	
-    	else if(x>androidSprite.getX()-10 && x<androidSprite.getX()+androidSprite.getWidth()+10 && y<androidSprite.getY()+androidSprite.getHeight()+10 && y>androidSprite.getY()-10)
+    	else if(x>androidSprite.getX()-15 && x<androidSprite.getX()+androidSprite.getWidth()+15 && y<androidSprite.getY()+androidSprite.getHeight()+15 && y>androidSprite.getY()-15)
     	{
             androidSprite.setTexture(androidCrunchTexture);
 			
