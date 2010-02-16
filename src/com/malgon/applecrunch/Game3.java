@@ -102,7 +102,7 @@ public class Game3 extends RokonActivity {
     public int laserVelocity=500;
     
     
-    public int screenHeight=430;
+    public int screenHeight, screenWidth;
     
     
     public String url="http://malgonstudio.sfhost.net/apple-crunch/add_score.php";
@@ -400,7 +400,7 @@ public class Game3 extends RokonActivity {
 			if(pref.getBoolean("vibrate", true))
 				rokon.vibrate(1000);
 			
-			scoreDialog.setMessage("Do you want to save score "+score+" ? (you can see high-scores on http://malgonstudio.sfhost.net/apple-crunch/score)");
+			scoreDialog.setMessage("Do you want to save score "+score+" ? (you can see high-scores on http://pixellostudio.sfhost.net/apple-crunch/score)");
 			scoreDialog.show();
 		}
     };
@@ -497,7 +497,12 @@ public void removeSprites()
 
 
 public void onCreate() {
-    createEngine("graphics/splash2.png",320, 430, false);
+	DisplayMetrics dm = new DisplayMetrics(); 
+	getWindowManager().getDefaultDisplay().getMetrics(dm); 
+	screenHeight=dm.heightPixels;
+	screenWidth=dm.widthPixels;
+	
+    createEngine("graphics/splash2.png",screenWidth, screenHeight, false);
 
     
     alertDialog = new AlertDialog.Builder(Game3.this).create();
@@ -610,7 +615,7 @@ public void onCreate() {
             atlas.insert(font = new Font("fonts/256BYTES.TTF"));
             TextureManager.load(atlas);
             
-            canonSprite = new Sprite(20,dm.widthPixels+canonTexture.getWidth(),canonTexture);
+            canonSprite = new Sprite(100,screenHeight-70,canonTexture);
             canonHotspot = new Hotspot(canonSprite);    
                         
             background = new FixedBackground(backgroundTexture);
@@ -628,7 +633,7 @@ public void onCreate() {
 
             canonSprite.setCollisionHandler(collisionHandler);
             
-            textScore = new Text(String.valueOf(score), font, 40, 380, 32);
+            textScore = new Text(String.valueOf(score), font, 40, screenHeight-50, 32);
             textTime = new Text(String.valueOf(time), font, 10, 10, 32);
     		rokon.addText(textScore);
     		rokon.addText(textTime);
